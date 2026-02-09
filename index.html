@@ -88,6 +88,16 @@
 </div>
 
 <script>
+ let musicPlayed = false;
+
+ function playMusic() {
+  if (!musicPlayed) {
+   const music = new 
+ Audio("ID3");
+   music.play();
+   musicPlayed =true;
+  }
+ }
   const apologyText = "I’m sorry for what I’ve done. I understand now how it affected you, and I wish I had been more careful with your feelings.";
   let stepIndex = 0;
 
@@ -155,3 +165,4 @@
 
 </body>
 </html>
+
