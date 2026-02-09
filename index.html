@@ -1,0 +1,157 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Missing You</title>
+<style>
+  * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #0d1b2a, #1b263b);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: relative;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 25px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    z-index: 10;
+    position: relative;
+  }
+  h1 { font-weight: 500; margin-bottom: 10px; color: #a9d6e5; }
+  #typing, .message { font-size: 16px; opacity: 0; min-height: 60px; line-height: 1.6; transition: 0.8s ease; }
+  .visible { opacity: 1; transform: translateY(0); }
+  button.mainBtn, .optionBtn {
+    margin-top: 20px; padding: 12px 28px; border: none; border-radius: 30px;
+    background: #3a86ff; color: white; font-size: 14px; cursor: pointer; transition: 0.3s;
+    z-index: 11; position: relative;
+  }
+  button.mainBtn:hover, .optionBtn:hover { transform: scale(1.05); background: #1d4ed8; }
+  .optionBtn { display: block; margin: 10px auto 0; width: 180px; }
+  .signature { margin-top: 10px; font-size: 13px; opacity: 0.6; font-style: italic; }
+  .heart {
+    position: absolute;
+    font-size: 18px;
+    animation: float linear infinite;
+    z-index: 5;
+    user-select: none;
+    pointer-events: none;
+  }
+  @keyframes float {
+    from { transform: translateY(110vh) scale(1); opacity: 1; }
+    to { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>I Miss You, Isaiah</h1>
+  <div id="typing"></div>
+  <button id="revealBtn" class="mainBtn" onclick="nextStep()">tap if u miss me too</button>
+
+  <div id="loveMessage" class="message">
+    I loved you more than I could ever say.<br>
+    Every little thing reminded me of you.<br>
+    Every mangga, every tiktok videos, and in every song I listen to.<br>
+    <div class="signature">— by gia</div>
+  </div>
+
+  <div id="creativeMessage" class="message">
+    I hope u felt that I did loved u even though I know u think otherwise.<br>
+    And yk, u keep on visiting me in my dreams, and it sometimes keeps me awake.<br>
+    I really really really felt bad for hurting u.<br>
+    idk why I'm making this type of stuff late at night.<br>
+    it just proved how far I'd go just to make bawi w you.<br>
+    I badly wanna ask u how you've been doing now<br>
+    I hope my prayers somehow reached u<br>
+    I miss telling u abt how my day went and giving u a call.<br>
+    <div class="signature">— by gia</div>
+  </div>
+
+  <div id="optionsContainer" style="display:none;">
+    <button class="optionBtn" onclick="optionClicked('yes')">yes</button>
+    <button class="optionBtn" onclick="optionClicked('yes na yes')">yes na yes</button>
+    <button class="optionBtn" onclick="optionClicked('super yes')">super yes</button>
+    <button class="optionBtn" onclick="optionClicked('no💔🥀')">no💔🥀</button>
+  </div>
+</div>
+
+<script>
+  const apologyText = "I’m sorry for what I’ve done. I understand now how it affected you, and I wish I had been more careful with your feelings.";
+  let stepIndex = 0;
+
+  function typeText(element, text, callback) {
+    let i = 0;
+    element.style.opacity = "1";
+    element.style.transform = "translateY(0)";
+    element.textContent = "";
+    const interval = setInterval(() => {
+      element.textContent += text.charAt(i);
+      i++;
+      if(i >= text.length) {
+        clearInterval(interval);
+        if(callback) callback();
+      }
+    }, 40);
+  }
+
+  typeText(document.getElementById("typing"), apologyText);
+
+  function nextStep() {
+    stepIndex++;
+    const btn = document.getElementById("revealBtn");
+
+    if(stepIndex === 1) {
+      const el = document.getElementById("loveMessage");
+      el.classList.add("visible");
+      el.textContent = "";
+      const loveText = "I loved you more than i could ever say. \nEvery little thing remind me of you every mangga, every tiktok videos, and in every song i listen to.";
+      typeText(el, loveText);
+      btn.textContent = "missubaby☹️";
+    } else if(stepIndex === 2) {
+      const el = document.getElementById("creativeMessage");
+      el.classList.add("visible");
+      el.textContent = "";
+      const creativeText = "I hope you felt that I did love you even though I know you think otherwise. and yk, you keep on visiting me in my dreams and it sometimes keeps me awake. I really really really felt bad for hurting you. idk why I'm making this type of stuff late at night. It just proved how far I'd go just to make bawi with you. \nI hope my prayers somehow reached you. \nI badly want to ask you how you've been doing now.  \nI miss telling you about how my day went and giving you a call.";
+      typeText(el, creativeText);
+      btn.textContent = "do u still wanna talk to me?";
+    } else if(stepIndex === 3) {
+      btn.style.display = "none"; 
+      document.getElementById("optionsContainer").style.display = "block";
+    }
+  }
+
+  function optionClicked(option) {
+    alert("He clicked: " + option);
+    // You can replace alert with a notification to yourself if you want
+  }
+
+  // Floating 💔 and ☹️
+  const emojis = ["💔", "☹️"];
+  function floatingEmojis() {
+    const emoji = document.createElement("div");
+    emoji.className = "heart";
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.fontSize = (12 + Math.random() * 20) + "px";
+    emoji.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 10000);
+  }
+
+  setInterval(floatingEmojis, 500);
+</script>
+
+</body>
+</html>
